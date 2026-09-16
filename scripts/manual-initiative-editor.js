@@ -76,7 +76,8 @@ async function onDoubleClick(event, app) {
   event.stopPropagation();
 
   const originalHTML = target.innerHTML;
-  const currentValue = combatant.initiative ?? "";
+  const originalInitiative = combatant.initiative;
+  const currentValue = originalInitiative ?? "";
 
   const input = document.createElement("input");
   input.type = "number";
@@ -99,10 +100,17 @@ async function onDoubleClick(event, app) {
     if (resolved) return;
     resolved = true;
 
-    const value = parseFloat(input.value);
+    let value = parseFloat(input.value);
     if (Number.isNaN(value)) {
       restore();
       return;
+    }
+
+    // No decimal typed: keep whatever decimal portion the initiative
+    // already had, only replacing the whole-number part.
+    if (!input.value.includes(".") && Number.isFinite(originalInitiative)) {
+      const originalFraction = originalInitiative - Math.trunc(originalInitiative);
+      value = Math.trunc(value) + originalFraction;
     }
 
     try {
