@@ -2,7 +2,7 @@
   "id": "manual-initiative-editor",
   "title": "Manual Initiative Editor",
   "description": "Double-click a combatant's initiative in the Combat Tracker to type in a new value by hand.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "authors": [
     {
       "name": "Custom"
@@ -10,7 +10,7 @@
   ],
   "compatibility": {
     "minimum": "13",
-    "verified": "13"
+    "verified": "14"
   },
   "esmodules": [
     "scripts/manual-initiative-editor.js"

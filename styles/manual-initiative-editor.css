@@ -1,6 +1,4 @@
-.token-initiative,
-.initiative,
-.combatant-initiative {
+.token-initiative > span {
   cursor: pointer;
 }
 

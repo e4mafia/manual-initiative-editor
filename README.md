@@ -42,9 +42,14 @@ it's always available with zero extra steps.
 ## Usage
 
 - Open the Combat Tracker with an active encounter.
-- As the GM, double-click any combatant's initiative number.
-- It turns into a text box — type the new value.
-- Press **Enter** (or click elsewhere) to save it, or **Esc** to cancel.
+- If every combatant's initiative is a whole number, Foundry (v13+) already
+  shows it as an editable text box — just click in and type, no need for
+  this module.
+- If *any* combatant in the encounter has a decimal initiative (e.g. from a
+  dex-tiebreak house rule or module), Foundry falls back to plain,
+  read-only text for everyone. As the GM, double-click that number to turn
+  it into an editable box, type the new value, and press **Enter** (or
+  click elsewhere) to save it, or **Esc** to cancel.
 
 ## Notes
 
@@ -52,7 +57,7 @@ it's always available with zero extra steps.
   normally managed).
 - This only changes how you *enter* a value manually — it doesn't touch
   dice rolling, turn order, or any other combat behavior.
-- Built against the Foundry v13 Combat Tracker; it uses generic selectors
-  and should keep working if minor markup tweaks happen in later point
-  releases, but let me know if a specific system's custom tracker doesn't
-  pick it up.
+- Built against the Foundry v13/v14 Combat Tracker; it uses generic
+  selectors and should keep working if minor markup tweaks happen in later
+  point releases, but let me know if a specific system's custom tracker
+  doesn't pick it up.

@@ -5,22 +5,30 @@
  * replace it with a number input, type a new value, and press Enter
  * (or click away) to save it.
  *
- * Works with both the legacy (jQuery-based) Combat Tracker and the
- * ApplicationV2 Combat Tracker used in Foundry v13, since it delegates
- * a single dblclick listener on the tracker's root element rather than
- * binding to individual rows (which get rebuilt on every render).
+ * Since Foundry v13, core already renders initiative as an always-editable
+ * text input when every value in the encounter is a whole number - no
+ * double-click needed there, and this module leaves that input alone.
+ * Core only falls back to a plain, read-only <span> once *any* combatant
+ * in the encounter has a decimal initiative (e.g. from a dex-tiebreak
+ * house rule), which is the gap this module fills.
+ *
+ * Core's Combat Tracker also has its own dblclick listener on the same
+ * root element that opens the combatant's actor sheet on that read-only
+ * span. Our listener is bound in the capture phase and stops propagation
+ * so it runs first and suppresses core's handler, instead of both firing
+ * and the actor sheet stealing focus mid-edit.
  */
 
 const MODULE_ID = "manual-initiative-editor";
 
-/** Selectors that have been used for the initiative display across recent core versions. */
-const INITIATIVE_SELECTOR = ".token-initiative, .initiative, .combatant-initiative";
+/** Only the read-only initiative display; core's own editable input is left untouched. */
+const INITIATIVE_SELECTOR = ".token-initiative > span";
 
 /** Selector for the list item / row that carries the combatant's id. */
 const COMBATANT_ROW_SELECTOR = "[data-combatant-id]";
 
 Hooks.on("renderCombatTracker", (app, html) => {
-  // ApplicationV2 (v13) passes a raw HTMLElement; the legacy Application
+  // ApplicationV2 (v13+) passes a raw HTMLElement; the legacy Application
   // passes a jQuery object. Normalize to a plain element either way.
   const root = html instanceof HTMLElement ? html : html?.[0];
   if (!root) return;
@@ -32,7 +40,7 @@ Hooks.on("renderCombatTracker", (app, html) => {
   if (root.dataset.manualInitiativeBound === "true") return;
   root.dataset.manualInitiativeBound = "true";
 
-  root.addEventListener("dblclick", (event) => onDoubleClick(event, app));
+  root.addEventListener("dblclick", (event) => onDoubleClick(event, app), true);
 });
 
 /** Add a helpful tooltip to initiative displays for the GM. */
@@ -53,7 +61,7 @@ async function onDoubleClick(event, app) {
   if (!game.user.isGM) return;
 
   const target = event.target.closest(INITIATIVE_SELECTOR);
-  if (!target || target.tagName === "INPUT") return;
+  if (!target) return;
 
   const combatantId = getCombatantId(target);
   if (!combatantId) return;
@@ -62,6 +70,8 @@ async function onDoubleClick(event, app) {
   const combatant = combat?.combatants?.get(combatantId);
   if (!combat || !combatant) return;
 
+  // Suppress core's own dblclick handler (bound to the same root element
+  // in the bubble phase), which would otherwise open the actor sheet.
   event.preventDefault();
   event.stopPropagation();
 
