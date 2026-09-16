@@ -1,0 +1,27 @@
+{
+  "id": "manual-initiative-editor",
+  "title": "Manual Initiative Editor",
+  "description": "Double-click a combatant's initiative in the Combat Tracker to type in a new value by hand.",
+  "version": "1.0.0",
+  "authors": [
+    {
+      "name": "Custom"
+    }
+  ],
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13"
+  },
+  "esmodules": [
+    "scripts/manual-initiative-editor.js"
+  ],
+  "styles": [
+    "styles/manual-initiative-editor.css"
+  ],
+  "url": "https://github.com/e4mafia/manual-initiative-editor",
+  "manifest": "https://raw.githubusercontent.com/e4mafia/manual-initiative-editor/main/module.json",
+  "download": "https://github.com/e4mafia/manual-initiative-editor/archive/refs/heads/main.zip",
+  "bugs": "https://github.com/e4mafia/manual-initiative-editor/issues",
+  "readme": "https://github.com/e4mafia/manual-initiative-editor/blob/main/README.md",
+  "license": "https://github.com/e4mafia/manual-initiative-editor/blob/main/LICENSE"
+}

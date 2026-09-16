@@ -1,0 +1,16 @@
+.token-initiative,
+.initiative,
+.combatant-initiative {
+  cursor: pointer;
+}
+
+.manual-initiative-input {
+  width: 3.5em;
+  text-align: center;
+  font: inherit;
+  color: inherit;
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--color-border-light-tertiary, #999);
+  border-radius: 3px;
+  padding: 0 2px;
+}
